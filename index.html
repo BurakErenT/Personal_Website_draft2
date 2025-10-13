@@ -20,5 +20,30 @@
         <h1>Welcome to My Personal Website</h1>
         <p>This is a draft homepage. Use the navigation bar to explore different sections.</p>
     </div>
+    <script>
+        const http = require('http');
+        const fs = require('fs');
+        const path = require('path');
+
+        const hostname = '127.0.0.1';
+        const port = 8080;
+
+        const server = http.createServer((req, res) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'text/html');
+            fs.readFile(path.join(__dirname, 'index.html'), (err, data) => {
+                if (err) {
+                    res.statusCode = 500;
+                    res.end('Error loading index.html');
+                } else {
+                    res.end(data);
+                }
+            });
+        });
+
+        server.listen(port, hostname, () => {
+            console.log(`Server running at http://${hostname}:${port}/`);
+        });
+    </script>
 </body>
 </html>
